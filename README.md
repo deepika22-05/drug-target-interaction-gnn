@@ -1,40 +1,54 @@
-# Drug-Target Interaction Prediction using GNN
+# 🧬 Drug-Target Interaction Prediction using GNN
 
 A deep learning project that predicts drug-target interactions using Graph Neural Networks (GNN) on the DAVIS dataset.
 
 ## 🎯 Objective
-Predict whether a drug molecule will bind to a target protein using GNN-based deep learning.
+Predict whether a drug molecule will bind to a target protein using GNN-based deep learning — helping accelerate drug discovery for cancer treatment.
 
-## 🧬 Dataset
+## 🧪 Dataset
 - **DAVIS Dataset** — 68 drugs, 379 proteins, 30,056 interaction pairs
 - Source: DeepPurpose library
+- Binary labels: Strong binding (pKd ≥ 30) vs Weak binding
 
 ## 🏗️ Model Architecture
 - **Drug Encoder** — 3-layer GCN (Graph Convolutional Network)
-- **Protein Encoder** — 2-layer MLP (amino acid sequence encoding)
+  - SMILES → Molecular Graph → 128-dim embedding
+- **Protein Encoder** — 2-layer MLP
+  - Amino acid sequence → 128-dim embedding  
 - **Classifier** — Fully connected layers with dropout
+  - Combined 256-dim → Binary prediction
 
 ## 📊 Results
-| Metric | Score |
-|--------|-------|
-| Accuracy | 95.39% |
-| AUROC | 0.5781 |
-| F1 Score | 0.1042 |
-| Strong Binding Recall | 89% |
+
+| Model | AUROC | Accuracy | Strong Recall |
+|-------|-------|----------|---------------|
+| Baseline | 0.50 | 95% | 0% |
+| Balanced Model | 0.58 | 30% | 89% |
+| Fine-tuned Model | **0.72** | **66%** | **66%** |
+
+![Results](final_results.png)
 
 ## 🛠️ Tech Stack
 - Python, PyTorch, PyTorch Geometric
-- RDKit, DeepPurpose
-- Google Colab (GPU)
+- RDKit, DeepPurpose, Scikit-learn
+- Google Colab (T4 GPU)
 
 ## 🚀 How to Run
-1. Open the notebook in Google Colab
-2. Run all cells sequentially
-3. Results will be saved automatically
+1. Open `DTI_Day1.ipynb` in Google Colab
+2. Runtime → Change runtime type → T4 GPU
+3. Run all cells sequentially
+4. Results saved automatically as `final_results.png`
 
-## 📁 Files
-- `DTI_Day1.ipynb` — Main notebook with full pipeline
-- `results.png` — Training and evaluation graphs
+## 🔬 Key Findings
+- GNN successfully learns drug molecular structure from SMILES
+- Class imbalance handling improved strong binding recall from 0% → 66%
+- AUROC improved from 0.50 (random) → 0.72 after fine-tuning
+
+## 🔮 Future Work
+- Larger dataset (BindingDB)
+- Attention mechanism for better interpretability
+- Protein structure (3D) integration
+- Clinical validation
 
 ## 👤 Author
 Deepika | Bioinformatics + Data Science
